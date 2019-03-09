@@ -6,7 +6,7 @@ Vue.config.productionTip = false
 new Vue({
   render: h => h(LoadData, {
     props: {
-      title: 'Monsieur',
+      title: 'todos',
       obj: {
         message: 'helloo you',
         url: 'http://google.com'

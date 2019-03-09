@@ -6,18 +6,58 @@
         <li v-for="(val, index) in obj" :key="val">{{index}}:: {{val}}</li>
       </ul>
     </div>
+    <button @click="callApi">call api</button>
+    <ul>
+      <li v-for="res in results" :key="res.id">{{res.title}}</li>
+    </ul>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "opsdbComponent",
+  watch: {
+    title(val) {
+      console.log(val);
+    }
+  },
+  data() {
+    return {
+      url: `https://jsonplaceholder.typicode.com/`,
+      results: null
+    };
+  },
+  computed: {
+    _url() {
+      return this.url + this.title;
+    }
+  },
   mounted() {
-    console.log(this);
+    // console.log(this);
   },
   props: {
     title: String,
     obj: Object
+  },
+  methods: {
+    callApi() {
+      console.log(this);
+      axios
+        .get(this._url)
+        .then(response => {
+          // handle success
+          // console.log(response);
+          this.results = response.data.slice(0, 10);
+        })
+        .catch(function(error) {
+          // handle error
+          // console.log(error);
+        })
+        .then(function() {
+          // always executed
+        });
+    }
   }
 };
 </script>

@@ -120,10 +120,10 @@
   </p>
   <h2>ksdj fisdbf sjbdf ksdf</h2>
   <!-- Trigger/Open The Modal -->
-  <button onclick="loadComponent('data 1')" class="myBtn">Open Modal</button>
-  <button onclick="loadComponent('data 2')" class="myBtn">Open Modal</button>
-  <button onclick="loadComponent('data 3')" class="myBtn">Open Modal</button>
-  <button onclick="loadComponent('data 4')" class="myBtn">Open Modal</button>
+  <button onclick="loadComponent('todos')" class="myBtn">Open Modal</button>
+  <button onclick="loadComponent('comments')" class="myBtn">Open Modal</button>
+  <button onclick="loadComponent('posts')" class="myBtn">Open Modal</button>
+  <button onclick="loadComponent('users')" class="myBtn">Open Modal</button>
 
   <!-- The Modal -->
   <div id="myModal" class="modal">
@@ -172,17 +172,32 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.8/dist/vue.js"></script>
 <script src="../dist/opsdbComponent.umd.js"></script>
 <script>
-  var vm, dyn;
-  function loadComponent(data) {
-    console.log(data)
-    openDialog()
-    vm.$mount('.modal-body')
-  }
+  var loadComponent;
+
   // vue should be loaded...
   document.addEventListener('DOMContentLoaded', function (event) {
+
+    var vm, dyn;
+    loadComponent = function (data) {
+      console.log(data)
+      openDialog()
+      vm.type = 'opsdbComponent'
+      vm.obj = {
+        title: data,
+        obj: {
+          message: 'looking for all ' + data,
+          url: 'https://jsonplaceholder.typicode.com/'
+        }
+      }
+    }
+
+    // vm.obj.title = 'alex ' + data
+    // vm.type = 'ok'
+
+
     dyn = Vue.component('my-wrapper', {
       components: {
-        opsdbComponent
+        opsdbComponent // need to register all component used by dynamic component
       },
       mounted() {
         console.log(this)
@@ -199,21 +214,22 @@
       template: `
         <div>
           <h3>wrapper comnponent {{ type }}</h3>
-          <p> {{childProps}} </p>
-          <p> {{obj}} </p>
-          <component :is="type" v-bind="childProps" ></component>
+          
+            <component :is="type" v-bind="obj" ></component>
+          
         </div>
       `
     })
     vm = new Vue({
+      // define as Data, will make it reactive and able to change vm.data... from outside
       data() {
         return {
           type: 'opsdbComponent',
           obj: {
-            title: 'Jean Claude',
+            title: 'posts',
             obj: {
-              message: 'Gracias you',
-              url: 'http://twitter.com'
+              message: 'initialize',
+              url: 'https://jsonplaceholder.typicode.com/'
             }
           }
         }
@@ -224,8 +240,7 @@
         })
       }
     })
-
-
+    vm.$mount('.modal-body')
 
   })
 </script>

@@ -9,6 +9,7 @@
     "export": "vue-cli-service build --target lib --name opsdbComponent src/components/loadData.vue"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "vue": "^2.6.6"
   },
   "devDependencies": {
