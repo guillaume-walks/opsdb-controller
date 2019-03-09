@@ -1,4 +1,12 @@
 # demo-vue-component
+demo dynamic component controller.
+shows how to use a dynamic component to render various custom components.
+
+Also should be able to:
+- be replace by another component,
+- keep alive mode after closing modal / re-opening
+
+
 
 ## Project setup
 ```
